@@ -4,14 +4,13 @@
 //Task: #Assignment2
 //Matrik: #240403
 //Name: #Tee Li Hong
-
 package com.tlh.rt_assignment2;
 
 import com.tlh.rt_assignment2.RTasgmt2.Details1;
 import com.tlh.rt_assignment2.RTasgmt2.Path;
 import static com.tlh.rt_assignment2.RTasgmt2.Path.folderName;
 import com.tlh.rt_assignment2.RTasgmt2.RTasgmt2;
-import static com.tlh.rt_assignment2.RTasgmt2.RTasgmt2.PATH;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -21,16 +20,15 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class TestDetails1 extends RTasgmt2 {
-    
+
     @Test
     public void testdetails1() throws IOException {
 
         //Test Path
-        Path pathName = new Path(PATH);
-        pathName.setPath(folderName);
+        Path.setPath(folderName);
 
-        String expectedFile = Paths.get("").toAbsolutePath().toString() + "\\" + folderName + "\\MyThread1.java";
-        String actualFile = pathName.getPath() + "\\MyThread1.java";
+        String expectedFile = Paths.get("").toAbsolutePath().toString() + File.separator + folderName + File.separator + "MyThread1.java";
+        String actualFile = Path.getPath() + File.separator + "MyThread1.java";
         Assert.assertEquals(expectedFile, actualFile);
         //finish Test Path
 
@@ -70,10 +68,10 @@ public class TestDetails1 extends RTasgmt2 {
         //Display title "java keyword"
         String i = row6.getCell(5).getStringCellValue();
         Assert.assertEquals("java keyword", i);
-        
+
         //TestMatricNo1
         Assert.assertEquals("898989", row8.getCell(0).getStringCellValue());
-                        
+
         //Display keywords
         String j0 = row7.getCell(5).getStringCellValue();
         String j1 = row7.getCell(6).getStringCellValue();
@@ -86,7 +84,7 @@ public class TestDetails1 extends RTasgmt2 {
         ArrayList<String> j = new ArrayList(Arrays.asList(j0, j1, j2, j3, j4, j5, j6));
         ArrayList<String> expectedkeyword = new ArrayList(Arrays.asList("class", "extends", "new", "package", "public", "static", "void"));
         Assert.assertEquals(expectedkeyword, j);
-               
+
         //Display number of keywords 
         int k0 = (int) row8.getCell(5).getNumericCellValue();
         int k1 = (int) row8.getCell(6).getNumericCellValue();
@@ -97,9 +95,9 @@ public class TestDetails1 extends RTasgmt2 {
         int k6 = (int) row8.getCell(11).getNumericCellValue();
 
         int[] k = {k0, k1, k2, k3, k4, k5, k6};
-        int[] expectedkeywordNo = {1,1,1,1,2,1,2};
+        int[] expectedkeywordNo = {1, 1, 1, 1, 2, 1, 2};
         Assert.assertArrayEquals(expectedkeywordNo, k);
-        
+
         //Test field name
         String l1 = row7.getCell(0).getStringCellValue();
         String l2 = row7.getCell(1).getStringCellValue();
@@ -112,18 +110,18 @@ public class TestDetails1 extends RTasgmt2 {
         ArrayList<String> expectedFieldName = new ArrayList(Arrays.asList("Matrik", "LOC", "Blank", "Comment", "ActualLOC", "Total"));
         Assert.assertEquals(expectedFieldName, l);
         //finish display field name
-        
+
         //Display result **about line of file**
         int m1 = (int) row8.getCell(1).getNumericCellValue(); //test line number(LOC)
         int m2 = (int) row8.getCell(2).getNumericCellValue(); //test empty line
         int m3 = (int) row8.getCell(3).getNumericCellValue(); //test comment no
         int m4 = (int) row8.getCell(4).getNumericCellValue(); //test actual LOC
         int m5 = (int) row8.getCell(12).getNumericCellValue(); //test total
-        
+
         int[] m = {m1, m2, m3, m4, m5};
-        int[] expectedresult = {24,4,6,14,23};
+        int[] expectedresult = {24, 4, 6, 14, 23};
         Assert.assertArrayEquals(expectedresult, m);
 
     }
-  
+
 }
