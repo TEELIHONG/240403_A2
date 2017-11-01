@@ -120,9 +120,9 @@ public class Details2 {
                         row9.createCell(12).setCellValue(total1);
                     }
 
-                } else {
-                    //System.out.println("File does not exists!");
-                }
+                } /*else {
+                    System.out.println("File does not exists!");
+                }*/
 
             } catch (IOException e) {
             }
