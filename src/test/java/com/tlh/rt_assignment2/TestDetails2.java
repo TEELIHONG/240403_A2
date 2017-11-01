@@ -10,8 +10,8 @@ package com.tlh.rt_assignment2;
 import com.tlh.rt_assignment2.RTasgmt2.Details2;
 import com.tlh.rt_assignment2.RTasgmt2.Path;
 import static com.tlh.rt_assignment2.RTasgmt2.Path.folderName;
-import static com.tlh.rt_assignment2.RTasgmt2.RTasgmt2.PATH;
 import static com.tlh.rt_assignment2.RTasgmt2.RTasgmt2.sheet;
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import org.apache.poi.ss.usermodel.Row;
@@ -22,14 +22,14 @@ public class TestDetails2 {
     
     @Test
     public void testdetails2() throws IOException {
-        //Test path
-        Path pathName = new Path(PATH);
-        pathName.setPath(folderName);
+        
+        //Test Path
+        Path.setPath(folderName);
 
-        String expectedFile1 = Paths.get("").toAbsolutePath().toString() + "\\" + folderName + "\\MyThread2.java";
-        String actualFile1 = pathName.getPath() + "\\MyThread2.java";
-        Assert.assertEquals(expectedFile1, actualFile1);
-        //finish test path
+        String expectedFile = Paths.get("").toAbsolutePath().toString() + File.separator + folderName + File.separator + "MyThread2.java";
+        String actualFile = Path.getPath() + File.separator + "MyThread2.java";
+        Assert.assertEquals(expectedFile, actualFile);
+        //finish Test Path
         
         //Test content
         Details2 analyse2 = new Details2();
