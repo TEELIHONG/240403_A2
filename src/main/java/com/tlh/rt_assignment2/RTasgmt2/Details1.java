@@ -4,7 +4,6 @@
 //Task: #Assignment2
 //Matrik: #240403
 //Name: #Tee Li Hong
-
 package com.tlh.rt_assignment2.RTasgmt2;
 
 import static com.tlh.rt_assignment2.RTasgmt2.RTasgmt2.KEYWORDS;
@@ -25,22 +24,25 @@ import java.nio.charset.StandardCharsets;
 import org.apache.poi.ss.usermodel.Row;
 
 public class Details1 {
-    
-    public static int[] keywordcount = new int[55];
-    
+
+    static final int[] keywordcount = new int[55];
+
     public void details1() throws IOException {
         int empty = 0;
         int commentsNo = 0;
-        int actualLOC = 0;
+        int actualLOC;
         int linenumber = 0;
         int totalkeyword = 0;
-        int total = 0;
+        int total;
 
         try {
-            File file = new File(PATH + "\\MyThread1.java");
+            File myfile;
+            myfile = new File(PATH + File.separator + "MyThread1.java");
 
-            BufferedReader b = new BufferedReader(new FileReader(file));
-            String readLine = "";
+            Reader reader = new InputStreamReader(new FileInputStream(myfile), StandardCharsets.UTF_8);
+            BufferedReader b = new BufferedReader(new FileReader(myfile));
+
+            String readLine;
 
             Row row1 = sheet.createRow(0);
             Row row2 = sheet.createRow(1);
@@ -98,9 +100,9 @@ public class Details1 {
                 }
 
                 for (int count = 0; count < KEYWORDS.length; count++) {
-                    if (keywordcount[count] != 0) {
-                        //System.out.println(KEYWORDS[count] + ":" + keywordcount[count]);
-                    }
+                    /*if (keywordcount[count] != 0) {
+                        System.out.println(KEYWORDS[count] + ":" + keywordcount[count]); //display the used keywords list
+                    }*/
                     totalkeyword += keywordcount[count];
                 }
 
@@ -112,7 +114,7 @@ public class Details1 {
                         x++;
                     }
                 }
-                
+
                 row7.createCell(0).setCellValue("Matrik");
                 row7.createCell(1).setCellValue("LOC");
                 row7.createCell(2).setCellValue("Blank");
@@ -122,37 +124,37 @@ public class Details1 {
 
                 row8.createCell(2).setCellValue(empty);
                 row8.createCell(3).setCellValue(commentsNo);
+
                 //System.out.println("total:" + totalkeyword);
                 //System.out.println("Total number of empty lines : " + empty);
                 //System.out.println("Total number of comments : " + commentsNo);
-                if (file.exists()) {
+                if (myfile.exists()) {
 
-                    FileReader fr = new FileReader(file);
-                    Reader reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8);
-                    LineNumberReader lnr = new LineNumberReader(reader);
-
-                    while (lnr.readLine() != null) {
-                        linenumber++;
+                    try (LineNumberReader lnr = new LineNumberReader(reader)) {
+                        while (lnr.readLine() != null) {
+                            linenumber++;
+                        }
+                        row8.createCell(1).setCellValue(linenumber);
+                        //System.out.println("Total number of lines : " + linenumber);
+                        actualLOC = linenumber - empty - commentsNo;
+                        row8.createCell(4).setCellValue(actualLOC);
+                        //System.out.println("Actual LOC = " + actualLOC);
+                        total = totalkeyword + actualLOC;
+                        row8.createCell(12).setCellValue(total);
                     }
-                    row8.createCell(1).setCellValue(linenumber);
-                    //System.out.println("Total number of lines : " + linenumber);
-                    actualLOC = linenumber - empty - commentsNo;
-                    row8.createCell(4).setCellValue(actualLOC);
-                    //System.out.println("Actual LOC = " + actualLOC);
-                    total = totalkeyword + actualLOC;
-                    row8.createCell(12).setCellValue(total);
-                    lnr.close();
 
-                } else {
-                    //System.out.println("File does not exists!");
                 }
+                /*else {
+                    //System.out.println("File does not exists!");
+                }*/
 
             } catch (IOException e) {
             }
 
         } catch (IOException e) {
         }
-        FileOutputStream fileOut = new FileOutputStream(filename);
-        workbook.write(fileOut);
+        try (FileOutputStream fileOut = new FileOutputStream(filename)) {
+            workbook.write(fileOut);
+        }
     }
 }
